@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>
+		A form in the form of a from
+	</title>
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+	<link rel = "stylesheet" href="main.css"/>
+
+	
+</head>
+
+<body>
+	<nav class= "navbar navbar-default ">
+	<div >
+		<ul class = "nav navbar-nav">
+			<li><a href="main.html">Home</a></li>
+			<li><a href = "currentWeather.html">Current Weather</a></li>
+			<li><a href = "forcastWeather.html">Weather Forcast</a></li>
+			<li><a href = "form.html">Fill out a Form!</a></li>
+		</ul>
+	</div>
+</nav>
+
+	<div class = "form">
+		<form name="myForm" >
+			First name: <input type = "text" name = "firstname" value="John"/></br>
+			Last name: <input type = "text" name = "lastname" value="Doe"/> </br>
+			Do you smell bad?
+			 <input type ="radio" name="smell" value="smell" checked/> Yes</br>
+			<input type="button" value = "Submit" />
+		</form>
+	</div>
+
+<div>
+	<h3> Duff's Device</h3>
+	<pre> 
+send(to, from, count)
+<span class="greenstuff">register</span> short *to, *from;
+<span class="greenstuff">register</span> count;
+{
+    <span class="greenstuff">registe</span>r n = (count + 7) / 8;
+    <span class="greenstuff">switch</span> (count % 8) {
+    <span class="greenstuff">case</span> 0: <span class="greenstuff">do</span> { *to = *from++;
+    <span class="greenstuff">case</span> 7:      *to = *from++;
+    <span class="greenstuff">case</span> 6:      *to = *from++;
+    <span class="greenstuff">case</span> 5:      *to = *from++;
+    <span class="greenstuff">case</span> 4:      *to = *from++;
+    <span class="greenstuff">case</span> 3:      *to = *from++;
+    <span class="greenstuff">case</span> 2:      *to = *from++;
+    <span class="greenstuff">case</span> 1:      *to = *from++;
+            } <span class="greenstuff">while</span> (--n > 0);
+    }
+}
+</pre>
+
+</body>
+</htmL>

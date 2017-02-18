@@ -1,0 +1,129 @@
+
+<html>
+<head>
+<title>City Finder</title>
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script>
+$(document).ready(function() {
+$( "#cityfield" ).keyup(function() {
+	var url = "getcity?q="+$("#cityfield").val();
+
+  $.getJSON(url,function(data) {
+    var everything;
+    everything = "<ul>";
+    $.each(data, function(i,item) {
+      everything += "<li> "+data[i].city;
+    });
+    everything += "</ul>";
+    $("#txtHint").html(everything);
+  })
+  .done(function() { console.log('getJSON request succeeded!'); })
+  .fail(function(jqXHR, textStatus, errorThrown) { 
+    console.log('getJSON request failed! ' + textStatus); 
+    console.log("incoming "+jqXHR.responseText);
+  })
+  .always(function() { console.log('getJSON request ended!');
+  })
+  .complete(function() { console.log("complete"); });
+});
+
+$("#button").click(function(e){
+  var value = $("#cityfield").val();
+  console.log(value);
+  e.preventDefault();
+  $("#dispcity").text(value);
+
+    
+  var myurl= "https://api.wunderground.com/api/01945e17a6c316e8/geolookup/conditions/q/UT/";
+  myurl += value;
+  myurl += ".json";
+  console.log(myurl);
+  $.ajax({
+    url : myurl,
+    dataType : "jsonp",
+    success : function(parsed_json) {
+      var location = parsed_json['location']['city'];
+      var temp_string = parsed_json['current_observation']['temperature_string'];
+      var current_weather = parsed_json['current_observation']['weather'];
+      everything = "<ul>";
+      everything += "<li>Location: "+location;
+      everything += "<li>Temperature: "+temp_string;
+      everything += "<li>Weather: "+current_weather;
+      everything += "</ul>";
+      $("#weather").html(everything);
+    }
+  });
+});
+var date = new Date();
+var numbers = 'http://numbersapi.com/' + (date.getMonth() + 1 ) + '/' + date.getDate() + '/date';
+$.get(numbers, function(data) {
+  console.log(data);
+  $("#fact").text(data);
+} );
+console.log(numbers);
+
+
+
+});
+function code(){
+var cdata = $("#message").val();
+var shif = $("#key").val();
+var ob = {text:cdata,shift:shif}
+var curl = "code"
+ob = JSON.stringify(ob)
+console.log(cdata);
+$.ajax({
+	url:curl,
+	data: ob,
+	type: "POST",
+	contentType: "application/json; charset=utf-8",
+	success: function(result, status, xhr) {
+		$("#hidden").text(result)
+	}
+});}
+
+function decode(){
+var cdata = $("#secret").val();
+var shif = $("#key2").val();
+var ob = {text:cdata,shift:shif}
+var curl = "decode"
+ob = JSON.stringify(ob)
+console.log(cdata);
+$.ajax({
+	url:curl,
+	data: ob,
+	type: "POST",
+	contentType: "application/json; charset=utf-8",
+	success: function(result, status, xhr) {
+		$("#decode").text(result)
+	}
+});}
+</script>
+
+</head>
+<body>
+<form>
+Enter A Utah City: <input type="text" id="cityfield" value=""><br>
+Suggestion: <span id="txtHint">Empty</span>
+<input id="button" type="submit" value="Submit">
+</form>
+<p>City</p>
+<textarea id="dispcity">No City</textarea>
+<p>Current Weather</p>
+<div id="weather">No weather</div>
+<div id="fact">Todays fact</div>
+</br>
+<form id ="encrypt" action="javascript:code()">
+Enter Message to Encrypt <input type="text" id="message" value=""><br>
+Select key <input type="number" id="key" min="1" max="26"></br>
+<input type="submit" value="SUBMIT">
+</form>
+	<div id="hidden"></div>
+<form id ="decrypt" action ="javascript:decode()">
+Enter Message to Decrypt <input = "text" id= "secret" value""><br>
+SelectKey <input type="number" id="key2" min="1" max="26"></br>
+<input type = "submit" value="SUBMIT">
+</form>
+<div id="decode"></div>
+</body>
+</html>
